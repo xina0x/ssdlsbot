@@ -59,6 +59,7 @@ def get_single_song(bot, update):
         for file in files:
             bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
             bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption=update.message.chat.username)
+            bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
             sent += 1
     except:
         pass
