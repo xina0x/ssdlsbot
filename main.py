@@ -42,7 +42,7 @@ def get_single_song(bot, update):
     os.chdir(f'./.temp{message_id}{chat_id}')
 
     logging.log(logging.INFO, f'start downloading')
-    downloadMsg = bot.send_message(chat_id=chat_id, text="Downloading...")
+    bot.send_message(chat_id=chat_id, text="Downloading...")
 
     if config["SPOTDL_DOWNLOADER"]:
         os.system(f'spotdl {url}')
@@ -54,14 +54,12 @@ def get_single_song(bot, update):
     logging.log(logging.INFO, 'sending to client')
     try:
         sent = 0 
-        bot.deleteMessage(message_id = downloadMsg.message_id, chat_id = chat_id)
-        sendMsg = bot.send_message(chat_id=chat_id, text="Sending to You...")
+        bot.send_message(chat_id=chat_id, text="Sending to You...")
         files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
         for file in files:
             bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
             bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
             bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
-            bot.deleteMessage(message_id = sendMsg.message_id, chat_id = chat_id)
             sent += 1
     except:
         pass
