@@ -45,7 +45,7 @@ def get_single_song(bot, update):
     bot.send_message(chat_id=chat_id, text="Downloading...")
 
     if config["SPOTDL_DOWNLOADER"]:
-        os.system(f'spotdl {url} --use-youtube')
+        os.system(f'spotdl {url}')
     elif config["SPOTIFYDL_DOWNLOADER"]:
         os.system(f'spotifydl {url}')
     else:
@@ -68,8 +68,20 @@ def get_single_song(bot, update):
     os.system(f'rm -rf .temp{message_id}{chat_id}')
 
     if sent == 0:
-       bot.send_message(chat_id=chat_id, text="It seems there was a problem in finding/sending the song.")
-       raise Exception("dl Failed")
+       bot.send_message(chat_id=chat_id, text="I couldn't download the song. I'll try again with another engine.")
+       os.system(f'spotdl {url} --use-youtube')
+       sent = 0 
+       bot.send_message(chat_id=chat_id, text="Sending to You...")
+       files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
+       for file in files:
+           bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
+           bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
+           bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
+           sent += 1
+       if sent == 0:
+           raise Exception("dl Failed")
+       else:
+           logging.log(logging.INFO, 'sent')
     else:
         logging.log(logging.INFO, 'sent')
 
