@@ -45,7 +45,7 @@ def get_single_song(bot, update):
     bot.send_message(chat_id=chat_id, text="Downloading...")
 
     if config["SPOTDL_DOWNLOADER"]:
-        os.system(f'spotdl {url}')
+        os.system(f'spotdl {url} --use-youtube')
     elif config["SPOTIFYDL_DOWNLOADER"]:
         os.system(f'spotifydl {url}')
     else:
