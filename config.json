@@ -5,5 +5,5 @@
     "USERS": []
   },
   "SPOTDL_DOWNLOADER": true,
-  "SPOTIFYDL_DOWNLOADER": false
+  "SPOTIFYDL_DOWNLOADER": true
 }
