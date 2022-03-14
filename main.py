@@ -46,9 +46,9 @@ def get_single_song(bot, update):
 
     if config["SPOTDL_DOWNLOADER"]:
         if 'playlist' in url:
-           os.system(f'spotdl {url} --dt 15 --st 15 --use-youtube')
-        else:
            os.system(f'spotdl {url} --dt 15 --st 15')
+        else:
+           os.system(f'spotdl {url} --dt 15')
     elif config["SPOTIFYDL_DOWNLOADER"]:
         os.system(f'spotifydl {url}')
     else:
