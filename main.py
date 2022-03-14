@@ -45,7 +45,10 @@ def get_single_song(bot, update):
     bot.send_message(chat_id=chat_id, text="Downloading...")
 
     if config["SPOTDL_DOWNLOADER"]:
-        os.system(f'spotdl {url} --dt 15 --st 15')
+        if 'playlist' in url:
+           os.system(f'spotdl {url} --dt 15 --st 15 --use-youtube')
+        else:
+           os.system(f'spotdl {url} --dt 15 --st 15')
     elif config["SPOTIFYDL_DOWNLOADER"]:
         os.system(f'spotifydl {url}')
     else:
