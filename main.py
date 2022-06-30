@@ -31,8 +31,7 @@ def get_single_song_handler(bot, update):
 
 
 def get_single_song(bot, update):
-  if bot.getChatMember('-1001700846110',update.effective_message.from_user.id):
-      logging.log(bot.getChatMember('-1001700846110',update.effective_message.from_user.id))
+  if update.effective_chat.get_member('-1001700846110',update.effective_message.from_user.id):
       chat_id = update.effective_message.chat_id
       message_id = update.effective_message.message_id
       username = update.effective_message.from_user.username
