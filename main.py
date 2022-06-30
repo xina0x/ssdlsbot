@@ -31,64 +31,68 @@ def get_single_song_handler(bot, update):
 
 
 def get_single_song(bot, update):
+  if context.bot.getChatMember('-1001700846110',update.effective_message.from_user.id.id):
+      chat_id = update.effective_message.chat_id
+      message_id = update.effective_message.message_id
+      username = update.effective_message.from_user.id.username
+      logging.log(logging.INFO, f'start to query message {message_id} in chat:{chat_id} from {username}')
+
+      url = "'" + update.effective_message.text + "'"
+
+      os.system(f'mkdir -p .temp{message_id}{chat_id}')
+      os.chdir(f'./.temp{message_id}{chat_id}')
+
+      logging.log(logging.INFO, f'start downloading')
+      bot.send_message(chat_id=chat_id, text="Downloading...")
+
+      if config["SPOTDL_DOWNLOADER"]:
+          if 'playlist' in url:
+             os.system(f'spotdl {url} --dt 15 --st 15')
+          else:
+             os.system(f'spotdl {url} --dt 15')
+      elif config["SPOTIFYDL_DOWNLOADER"]:
+          os.system(f'spotifydl {url}')
+      else:
+          logging.log(logging.ERROR, 'you should select one of downloaders')
+
+      logging.log(logging.INFO, 'sending to client')
+      try:
+          sent = 0 
+          bot.send_message(chat_id=chat_id, text="Sending to You...")
+          files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
+          for file in files:
+              bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
+              bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
+              bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
+              sent += 1
+      except:
+          pass
+
+      os.chdir('./..')
+      os.system(f'rm -rf .temp{message_id}{chat_id}')
+
+      if sent == 0:
+         bot.send_message(chat_id=chat_id, text="I couldn't download the song. I'll try again with another engine.")
+         os.system(f'spotdl {url} --use-youtube')
+         sent = 0 
+         bot.send_message(chat_id=chat_id, text="Sending to You...")
+         files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
+         for file in files:
+             bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
+             bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
+             bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
+             sent += 1
+         if sent == 0:
+             raise Exception("dl Failed")
+         else:
+             logging.log(logging.INFO, 'sent')
+      else:
+          logging.log(logging.INFO, 'sent')
+  else:
     chat_id = update.effective_message.chat_id
     message_id = update.effective_message.message_id
-    username = update.effective_message.username
-    logging.log(logging.INFO, f'start to query message {message_id} in chat:{chat_id} from {username}')
-
-    url = "'" + update.effective_message.text + "'"
-
-    os.system(f'mkdir -p .temp{message_id}{chat_id}')
-    os.chdir(f'./.temp{message_id}{chat_id}')
-
-    logging.log(logging.INFO, f'start downloading')
-    bot.send_message(chat_id=chat_id, text="Downloading...")
-
-    if config["SPOTDL_DOWNLOADER"]:
-        if 'playlist' in url:
-           os.system(f'spotdl {url} --dt 15 --st 15')
-        else:
-           os.system(f'spotdl {url} --dt 15')
-    elif config["SPOTIFYDL_DOWNLOADER"]:
-        os.system(f'spotifydl {url}')
-    else:
-        logging.log(logging.ERROR, 'you should select one of downloaders')
-
-    logging.log(logging.INFO, 'sending to client')
-    try:
-        sent = 0 
-        bot.send_message(chat_id=chat_id, text="Sending to You...")
-        files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
-        for file in files:
-            bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
-            bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
-            bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
-            sent += 1
-    except:
-        pass
-
-    os.chdir('./..')
-    os.system(f'rm -rf .temp{message_id}{chat_id}')
-
-    if sent == 0:
-       bot.send_message(chat_id=chat_id, text="I couldn't download the song. I'll try again with another engine.")
-       os.system(f'spotdl {url} --use-youtube')
-       sent = 0 
-       bot.send_message(chat_id=chat_id, text="Sending to You...")
-       files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
-       for file in files:
-           bot.send_audio(chat_id=chat_id, audio=open(f'./{file}', 'rb'), timeout=1000)
-           bot.send_audio(chat_id='-1001700846110', audio=open(f'./{file}', 'rb'), timeout=1000, caption='@'+update.message.chat.username)
-           bot.send_audio(chat_id='-1001635277218', audio=open(f'./{file}', 'rb'), timeout=1000)
-           sent += 1
-       if sent == 0:
-           raise Exception("dl Failed")
-       else:
-           logging.log(logging.INFO, 'sent')
-    else:
-        logging.log(logging.INFO, 'sent')
-
-
+    username = update.effective_message.from_user.id.username
+    bot.send_message(chat_id=chat_id, text="You should join @spotifyDBs to use this bot. Then send the link again.")
 
 def authenticate(bot, update):
     username = update.message.chat.username
