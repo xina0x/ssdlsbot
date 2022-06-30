@@ -33,7 +33,7 @@ def get_single_song_handler(bot, update):
 def get_single_song(bot, update):
     chat_id = update.effective_message.chat_id
     message_id = update.effective_message.message_id
-    username = update.message.chat.username
+    username = update.effective_message.username
     logging.log(logging.INFO, f'start to query message {message_id} in chat:{chat_id} from {username}')
 
     url = "'" + update.effective_message.text + "'"
