@@ -31,6 +31,7 @@ def get_single_song_handler(bot, update):
 
 
 def get_single_song(bot, update):
+      sent=0
       chat_id = update.effective_message.chat_id
       message_id = update.effective_message.message_id
       username = update.effective_message.from_user.username
