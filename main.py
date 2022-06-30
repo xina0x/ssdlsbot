@@ -31,7 +31,6 @@ def get_single_song_handler(bot, update):
 
 
 def get_single_song(bot, update):
-  if true:
       chat_id = update.effective_message.chat_id
       message_id = update.effective_message.message_id
       username = update.effective_message.from_user.username
@@ -88,11 +87,6 @@ def get_single_song(bot, update):
              logging.log(logging.INFO, 'sent')
       else:
           logging.log(logging.INFO, 'sent')
-  else:
-    chat_id = update.effective_message.chat_id
-    message_id = update.effective_message.message_id
-    username = update.effective_message.from_user.username
-    bot.send_message(chat_id=chat_id, text="You should join @spotifyDBs to use this bot. Then send the link again.")
 
 def authenticate(bot, update):
     username = update.message.chat.username
