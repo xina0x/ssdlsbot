@@ -32,6 +32,7 @@ def get_single_song_handler(bot, update):
 
 def get_single_song(bot, update):
   if bot.getChatMember('-1001700846110',update.effective_message.from_user.id):
+      logging.log(bot.getChatMember('-1001700846110',update.effective_message.from_user.id))
       chat_id = update.effective_message.chat_id
       message_id = update.effective_message.message_id
       username = update.effective_message.from_user.username
@@ -57,7 +58,7 @@ def get_single_song(bot, update):
 
       logging.log(logging.INFO, 'sending to client')
       try:
-          sent = 0 
+          sent == 0 
           bot.send_message(chat_id=chat_id, text="Sending to You...")
           files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
           for file in files:
