@@ -34,7 +34,7 @@ def get_single_song(bot, update):
   if bot.getChatMember('-1001700846110',update.effective_message.from_user.id):
       chat_id = update.effective_message.chat_id
       message_id = update.effective_message.message_id
-      username = update.effective_message.from_user.id.username
+      username = update.effective_message.from_user.username
       logging.log(logging.INFO, f'start to query message {message_id} in chat:{chat_id} from {username}')
 
       url = "'" + update.effective_message.text + "'"
