@@ -25,7 +25,7 @@ You can download:
 * Playlists
 * Artists
 
-<img src="https://github.com/gsoosk/TelegramSpotifyDownloader/blob/master/demo.png" width="450" />
+<img src="https://github.com/xina0x/ssdlsinatemp/blob/master/demo.png" width="450" />
 
 ## How to run?
 
