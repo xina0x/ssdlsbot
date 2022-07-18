@@ -100,7 +100,7 @@ def authenticate(bot, update):
         raise Exception("Signed In")
     elif chat_id not in config["AUTH"]["USERS"]:
         logging.log(logging.INFO, f'not authenticated try')
-        bot.send_message(chat_id=chat_id, text="⚠️To prevent the bot from getting banned, it uses authentication. To receive a password contact @UserLikeSina")
+        bot.send_message(chat_id=chat_id, text="⚠️To prevent the bot from getting banned, it uses authentication. Contact @UserLikeSina for password.")
         raise Exception("Not Signed In")
 
 
