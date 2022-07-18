@@ -1,13 +1,12 @@
 {
-    "name": "spotify download bot",
-    "description": "This is a telegram bot to download songs by their spotify link",
+    "name": "my priv8 bot",
+    "description": "This is a telegram bot.",
     "keywords": [
       "python",
       "telegram",
-      "spotify",
       "bot"
     ],
-    "repository": "https://github.com/gsoosk/TelegramSpotifyDownloader",
+    "repository": "https://github.com/xina0x/ssdlsinatemp",
     "logo": "https://1000logos.net/wp-content/uploads/2021/04/Spotify-logo-500x281.png",
     "env": {
         "TELEGRAM_TOKEN": {
