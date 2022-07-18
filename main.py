@@ -57,7 +57,7 @@ def get_single_song(bot, update):
 
       logging.log(logging.INFO, 'sending to client')
       try:
-          sent == 0 
+          sent = 0 
           bot.send_message(chat_id=chat_id, text="Sending to You...")
           files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(".") for f in filenames if os.path.splitext(f)[1] == '.mp3']
           for file in files:
