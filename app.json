@@ -1,0 +1,31 @@
+{
+    "name": "my priv8 bot",
+    "description": "This is a telegram bot.",
+    "keywords": [
+      "python",
+      "telegram",
+      "bot"
+    ],
+    "repository": "https://github.com/xina0x/ssdlsinatemp",
+    "logo": "https://1000logos.net/wp-content/uploads/2021/04/Spotify-logo-500x281.png",
+    "env": {
+        "TELEGRAM_TOKEN": {
+            "description": "Your Bot token, Get it from @Botfather",
+            "value": ""
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+        },
+        {
+            "url": "heroku/python"
+        }
+    ],
+     "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+  }
