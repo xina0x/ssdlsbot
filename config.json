@@ -1,6 +1,6 @@
 {
   "AUTH": {
-    "ENABLE": true,
+    "ENABLE": false,
     "PASSWORD": "heisenberg",
     "USERS": []
   },
